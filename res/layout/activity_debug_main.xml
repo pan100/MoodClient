@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DebugMainActivity" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Skjermer for debugging:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/TextAndImageLogActivityButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SleepLogActivityButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="openSelectedActivity"
+        android:text="@string/title_activity_text_and_image_log" />
+
+    <Button
+        android:id="@+id/MedicineLoggerActivityButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/TextAndImageLogActivityButton"
+        android:layout_centerVertical="true"
+        android:onClick="openSelectedActivity"
+        android:text="@string/title_activity_medicine_log" />
+
+    <Button
+        android:id="@+id/SleepLogActivityButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/MainActivityButton"
+        android:layout_below="@+id/MedicineLoggerActivityButton"
+        android:onClick="openSelectedActivity"
+        android:text="@string/title_activity_sleep_log" />
+
+    <Button
+        android:id="@+id/MainActivityButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/MedicineLoggerActivityButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="openSelectedActivity"
+        android:text="Hovedaktivitet" />
+
+    <Button
+        android:id="@+id/EditTodayButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/MainActivityButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="openSelectedActivity"
+        android:text="@string/title_activity_edit_today" />
+
+</RelativeLayout>

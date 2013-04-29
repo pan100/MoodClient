@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Life Charting App</string>
+    <string name="menu_settings">Innstillinger</string>
+    <string name="title_activity_sleep_log">God morgen!</string>
+    <string name="sleep_log_explanation">Hvor lenge har du sovet?</string>
+    <string name="choose_number_of_hours">Velg antall timer:</string>
+    <string name="settings">Innstillinger</string>
+    <string name="save">Lagre</string>
+    <string name="title_activity_medicine_log">Medisinvarsel og logger</string>
+    <string name="medicine_explanation">Det er på tide å ta medisin. Hak av for medisiner når eller om du tar dem. Har du endret medisinering, kan du endre dette under \&quot;innstillinger\&quot;.</string>
+    <string name="medicines_at">Medisiner klokken </string>
+    <string name="title_activity_text_and_image_log">Dagens tekst og bilder</string>
+    <string name="title_activity_debug_main">DebugMainActivity</string>
+    <string name="title_activity_edit_today">Rediger dagens data</string>
+    <string name="today_data">Data for i dag:</string>
+    <string name="sleep_colon">Søvn i timer:</string>
+    <string name="data_of_today">Dagens data:</string>
+
+</resources>
