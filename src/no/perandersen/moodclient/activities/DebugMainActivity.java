@@ -1,9 +1,11 @@
-package no.perandersen.moodclient;
+package no.perandersen.moodclient.activities;
 
+import no.perandersen.moodclient.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,6 +22,12 @@ public class DebugMainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_debug_main, menu);
 		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		startActivity(new Intent(this, SettingsActivity.class));
+		return true;
+		
 	}
 	
 	public void openSelectedActivity(View v) {

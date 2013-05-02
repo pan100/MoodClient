@@ -1,5 +1,9 @@
-package no.perandersen.moodclient;
+package no.perandersen.moodclient.activities;
 
+import no.perandersen.moodclient.R;
+import no.perandersen.moodclient.R.id;
+import no.perandersen.moodclient.R.layout;
+import no.perandersen.moodclient.R.menu;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

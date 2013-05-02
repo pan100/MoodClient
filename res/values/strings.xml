@@ -17,5 +17,7 @@
     <string name="today_data">Data for i dag:</string>
     <string name="sleep_colon">Søvn i timer:</string>
     <string name="data_of_today">Dagens data:</string>
+    <string name="sleep_log_time">Tid for logging av søvn</string>
+    <string name="title_activity_settings">Innstillinger</string>
 
 </resources>
