@@ -43,7 +43,7 @@ public class SleepLogActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_sleep_log, menu);
+		getMenuInflater().inflate(R.menu.activity_debug_main, menu);
 		return true;
 	}
 
@@ -59,6 +59,9 @@ public class SleepLogActivity extends Activity {
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
 			NavUtils.navigateUpFromSameTask(this);
+			return true;
+		case R.id.menu_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

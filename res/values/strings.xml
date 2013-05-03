@@ -21,5 +21,7 @@
     <string name="title_activity_settings">Innstillinger</string>
     <string name="prefs_time_sleepLog_default">09:00</string>
     <string name="prefs_logTimes">Tider for logging</string>
+    <string name="text_explanation_toggle_notifications">Knappen under slår av og på applikasjonen:</string>
+    <string name="title_activity_main">Hovedskjerm</string>
 
 </resources>
