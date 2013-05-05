@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/minValText"
         android:layout_centerVertical="true"
-        android:text="Alvorlig mani" />
+        android:text="@string/moodScale9" />
 
     <TextView
         android:id="@+id/textView3"

@@ -372,7 +372,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
                 paint.setColor(Color.GRAY);
                 paint.setAntiAlias(true);
                 canvas.drawRect(rect, paint);
-
+                int center = (int) rect.centerX();
                 // draw seek bar active range line
                 rect.left = normalizedToScreen(normalizedMinValue);
                 rect.right = normalizedToScreen(normalizedMaxValue);
@@ -389,7 +389,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
                 
                 // draw a line in the center
                 paint.setColor(Color.GREEN);
-                canvas.drawLine((canvas.getWidth() / 2), 0, (canvas.getWidth() / 2), canvas.getHeight(), paint);
+                canvas.drawLine(center, 0, center, canvas.getHeight(), paint);
         }
 
         /**

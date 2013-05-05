@@ -55,7 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="Button" />
+        android:onClick="nextButtonClick"
+        android:text="@string/next_screen" />
 
     <Button
         android:id="@+id/button2"
@@ -63,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/button1"
         android:layout_alignParentLeft="true"
-        android:text="Button" />
+        android:onClick="previousButtonClick"
+        android:text="@string/previous_screen" />
 
 </RelativeLayout>

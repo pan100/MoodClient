@@ -2,10 +2,12 @@ package no.perandersen.moodclient.activities;
 
 import no.perandersen.moodclient.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.MultiAutoCompleteTextView;
 
 public class TriggersDiaryActivity extends Activity {
@@ -51,6 +53,16 @@ public class TriggersDiaryActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void nextButtonClick(View w) {
+		//IMPLEMENT AND SEND TO THE SUMMARY
+	}
+	
+	public void previousButtonClick(View w) {
+		Intent startActivityIntent = new Intent(TriggersDiaryActivity.this, MoodActivity.class);
+		TriggersDiaryActivity.this.startActivity(startActivityIntent);
+		
 	}
 
 }
