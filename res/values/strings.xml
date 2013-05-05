@@ -43,5 +43,12 @@
     <string name="title_activity_triggers_diary">TriggersDiaryActivity</string>
     <string name="triggers_explanation">Skriv inn eventuelle ord for triggere under:</string>
     <string name="diary_explanation">Her kan du føre dagbok om du ønsker det eller skrive litt om dagen:</string>
+    <string name="evening_log_time">Tid for logging av humør (kveld)</string>
+    <string name="prefs_time_eveningLog_default">21:00</string>
+    <string name="prefs_connection">Tilkobling</string>
+    <string name="prefs_temporary">Lagre lokalt om ikke tilkoblet</string>
+    <string name="prefs_temporary_summary">Om du ikke har tilgang til internett idet du skal logge, så kan applikasjonen
+        ta vare på dataene for deg og sende dem når du kommer på nett igjen</string>
+    <string name="prefs_server_uri">Adresse til tjener</string>
 
 </resources>

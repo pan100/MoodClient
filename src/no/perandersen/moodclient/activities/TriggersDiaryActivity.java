@@ -34,7 +34,7 @@ public class TriggersDiaryActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.triggers_diary, menu);
+		getMenuInflater().inflate(R.menu.activity_debug_main, menu);
 		return true;
 	}
 
@@ -52,7 +52,8 @@ public class TriggersDiaryActivity extends Activity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		}
-		return super.onOptionsItemSelected(item);
+			startActivity(new Intent(this, SettingsActivity.class));
+			return true;
 	}
 	
 	public void nextButtonClick(View w) {

@@ -4,16 +4,6 @@
     android:layout_height="match_parent"
     tools:context=".SleepLogActivity" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/sleep_log_explanation"
-        android:src="@drawable/sleep" />
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -25,22 +15,21 @@
         android:text="@string/sleep_log_explanation"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <Button
-        android:drawableLeft="@drawable/settings"
-        android:id="@+id/button1"
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_width="fill_parent"
-        android:text="@string/settings" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/sleep_log_explanation"
+        android:src="@drawable/sleep" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="18dp"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignParentBottom="true"
         android:onClick="saveAndClose"
         android:text="@string/save" />
 
@@ -48,16 +37,17 @@
         android:id="@+id/np"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
-        android:layout_alignRight="@+id/button2"
-        android:layout_marginBottom="33dp" />
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="55dp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/np"
+        android:layout_below="@+id/imageView1"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
         android:text="@string/choose_number_of_hours" />
 
 </RelativeLayout>

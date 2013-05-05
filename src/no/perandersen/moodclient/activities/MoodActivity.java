@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -76,8 +77,14 @@ public class MoodActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.evening, menu);
+		getMenuInflater().inflate(R.menu.activity_debug_main, menu);
 		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		startActivity(new Intent(this, SettingsActivity.class));
+		return true;
+		
 	}
 	
 	public void nextButtonClick(View w) {

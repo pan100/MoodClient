@@ -6,6 +6,22 @@
             android:defaultValue="@string/prefs_time_sleepLog_default"
             android:key="time_sleepLog"
             android:title="@string/sleep_log_time" />
+        <no.perandersen.moodclient.system.TimePreference
+            android:defaultValue="@string/prefs_time_eveningLog_default"
+            android:key="time_eveningLog"
+            android:title="@string/evening_log_time" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefs_connection" >
+        <CheckBoxPreference 
+            android:key="connection_temporary_data"
+            android:title="@string/prefs_temporary"
+            android:summary="@string/prefs_temporary_summary"
+            android:defaultValue="true"
+            />
+        <EditTextPreference 
+            android:key="connection_server_uri"
+            android:title="@string/prefs_server_uri"
+            android:defaultValue="thresher.uib.no"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
