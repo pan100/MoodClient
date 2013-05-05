@@ -387,8 +387,8 @@ public class RangeSeekBar<T extends Number> extends ImageView {
                 // draw maximum thumb
                 drawThumb(normalizedToScreen(normalizedMaxValue), Thumb.MAX.equals(pressedThumb), canvas);
                 
-                // draw a line in the center DOESN'T WORK
-                paint.setColor(Color.RED);
+                // draw a line in the center
+                paint.setColor(Color.GREEN);
                 canvas.drawLine((canvas.getWidth() / 2), 0, (canvas.getWidth() / 2), canvas.getHeight(), paint);
         }
 

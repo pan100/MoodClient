@@ -24,10 +24,23 @@
     <string name="text_explanation_toggle_notifications">Knappen under slår av og på applikasjonen:</string>
     <string name="title_activity_main">Hovedskjerm</string>
     <string name="title_activity_evening">EveningActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="evening_explanation">Logg dagens humør, triggere og dagbok her</string>
+    <string name="action_settings">Innstillinger</string>
+    <string name="evening_explanation">Logg dagens humør, triggere og dagbok på disse skjermene</string>
     <string name="next_screen">Neste skjerm</string>
     <string name="mood">Humør:</string>
+    <string name="moodScale1">Alvorlig depresjon</string>
+    <string name="moodScale2">Høyt moderat depresjon</string>
+    <string name="moodScale3">Lavt moderat depresjon</string>
+    <string name="moodScale4">Mild depresjon</string>
+    <string name="moodScale5">Normalt humør</string>
+    <string name="moodScale6">Eufori</string>
+    <string name="moodScale7">Lavt hypoman</string>
+    <string name="moodScale8">Høyt hypoman</string>
+    <string name="moodScale9">Alvorlig mani</string>
+    <string name="high">Høy:</string>
+    <string name="low">Lav:</string>
+    <string name="title_activity_triggers_diary">TriggersDiaryActivity</string>
+    <string name="triggers_explanation">Skriv inn eventuelle ord for triggere under:</string>
+    <string name="diary_explanation">Her kan du føre dagbok om du ønsker det eller skrive litt om dagen:</string>
 
 </resources>

@@ -44,12 +44,48 @@
         android:layout_centerHorizontal="true"
         android:text="@string/mood" />
 
+    <TextView
+        android:id="@+id/maxValText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/minValText"
+        android:layout_centerVertical="true"
+        android:text="Alvorlig mani" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/minValText"
+        android:layout_alignLeft="@+id/groupForRange"
+        android:text="@string/low"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignTop="@+id/maxValText"
+        android:text="@string/high"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/minValText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/groupForRange"
+        android:layout_marginTop="22dp"
+        android:text="@string/moodScale1" />
+
     <Button
         android:id="@+id/nextButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:onClick="nextButtonClick"
         android:text="@string/next_screen" />
 
 </RelativeLayout>

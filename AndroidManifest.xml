@@ -18,7 +18,6 @@
         <activity
             android:name="no.perandersen.moodclient.activities.MainActivity"
             android:label="@string/title_activity_main" >
-
         </activity>
         <activity
             android:name="no.perandersen.moodclient.activities.SleepLogActivity"
@@ -56,11 +55,19 @@
         <activity
             android:name="no.perandersen.moodclient.activities.MoodActivity"
             android:label="@string/title_activity_evening" >
-                        <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="no.perandersen.moodclient.activities.TriggersDiaryActivity"
+            android:label="@string/title_activity_triggers_diary"
+            android:parentActivityName="no.perandersen.moodclient.activities.MoodActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="no.perandersen.moodclient.activities.MoodActivity" />
         </activity>
     </application>
 
