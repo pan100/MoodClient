@@ -44,7 +44,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="41dp"
         android:ems="10"
-        android:inputType="textMultiLine" >
+        android:inputType="textMultiLine"
+        android:textStyle="italic" >
 
         <requestFocus />
     </EditText>

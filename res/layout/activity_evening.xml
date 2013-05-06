@@ -58,16 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/minValText"
         android:layout_alignLeft="@+id/groupForRange"
+        android:layout_toLeftOf="@+id/textView1"
         android:text="@string/low"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignTop="@+id/maxValText"
-        android:text="@string/high"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -87,5 +79,15 @@
         android:layout_alignParentRight="true"
         android:onClick="nextButtonClick"
         android:text="@string/next_screen" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/maxValText"
+        android:layout_alignBottom="@+id/maxValText"
+        android:layout_alignLeft="@+id/textView3"
+        android:text="@string/high"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
