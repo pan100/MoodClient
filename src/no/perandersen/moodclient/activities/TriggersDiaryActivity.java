@@ -1,5 +1,8 @@
 package no.perandersen.moodclient.activities;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import no.perandersen.moodclient.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +23,9 @@ public class TriggersDiaryActivity extends Activity {
 		setupActionBar();
 		MultiAutoCompleteTextView textView = (MultiAutoCompleteTextView) findViewById(R.id.triggersTextView);
 		textView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+		
+		Date date = new Date();
+		setTitle(DateFormat.getDateInstance().format(date));
 	}
 
 	/**

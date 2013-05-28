@@ -90,4 +90,13 @@
         android:text="@string/high"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/nextButton1"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_marginBottom="16dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </RelativeLayout>

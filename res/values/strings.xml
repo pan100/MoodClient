@@ -50,5 +50,7 @@
     <string name="prefs_temporary_summary">Om du ikke har tilgang til internett idet du skal logge, så kan applikasjonen
         ta vare på dataene for deg og sende dem når du kommer på nett igjen</string>
     <string name="prefs_server_uri">Adresse til tjener</string>
+    <string name="title_activity_evening_summary">EveningSummaryActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

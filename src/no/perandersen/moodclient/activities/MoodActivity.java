@@ -1,11 +1,14 @@
 package no.perandersen.moodclient.activities;
 
+import java.util.Date;
+
 import no.perandersen.moodclient.R;
 import no.perandersen.moodclient.system.RangeSeekBar;
 import no.perandersen.moodclient.system.RangeSeekBar.OnRangeSeekBarChangeListener;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import java.text.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,6 +75,12 @@ public class MoodActivity extends Activity {
 		// add RangeSeekBar to pre-defined layout
 		ViewGroup layout = (ViewGroup) findViewById(R.id.groupForRange);
 		layout.addView(seekBar);
+		
+		//set the date
+		Date date = new Date();
+		TextView dateView = (TextView) findViewById(R.id.dateTextView);
+		dateView.setText(DateFormat.getDateInstance().format(date));
+		setTitle(DateFormat.getDateInstance().format(date));
 	}
 
 	@Override

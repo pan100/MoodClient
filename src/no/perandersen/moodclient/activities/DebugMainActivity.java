@@ -39,9 +39,6 @@ public class DebugMainActivity extends Activity {
 		Intent startActivityIntent = null;
 		
 		switch(b.getId()) {
-		case R.id.TextAndImageLogActivityButton:
-			startActivityIntent = new Intent(DebugMainActivity.this, TextAndImageLogActivity.class);
-			break;
 		case R.id.EditTodayButton:
 			startActivityIntent = new Intent(DebugMainActivity.this, EditTodayActivity.class);
 			break;
