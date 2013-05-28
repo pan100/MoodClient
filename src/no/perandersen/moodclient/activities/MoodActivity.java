@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MoodActivity extends Activity {
+	
+	private Date date;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +78,8 @@ public class MoodActivity extends Activity {
 		ViewGroup layout = (ViewGroup) findViewById(R.id.groupForRange);
 		layout.addView(seekBar);
 		
-		//set the date
-		Date date = new Date();
+		//set the date TODO set it in the notification instead
+		date = new Date();
 		TextView dateView = (TextView) findViewById(R.id.dateTextView);
 		dateView.setText(DateFormat.getDateInstance().format(date));
 		setTitle(DateFormat.getDateInstance().format(date));
@@ -98,6 +100,7 @@ public class MoodActivity extends Activity {
 	
 	public void nextButtonClick(View w) {
 		Intent startActivityIntent = new Intent(MoodActivity.this, TriggersDiaryActivity.class);
+		startActivityIntent.putExtra("DATE", date);
 		MoodActivity.this.startActivity(startActivityIntent);
 		
 	}

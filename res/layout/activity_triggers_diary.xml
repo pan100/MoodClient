@@ -56,8 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:onClick="nextButtonClick"
-        android:text="@string/next_screen" />
+        android:onClick="saveClick"
+        android:text="@string/save" />
 
     <Button
         android:id="@+id/button2"

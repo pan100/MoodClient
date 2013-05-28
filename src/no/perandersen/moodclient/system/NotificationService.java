@@ -1,20 +1,21 @@
 package no.perandersen.moodclient.system;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
 public class NotificationService extends Service {
-
+	private NotificationManager nm;
+	private static final String TAG = "NotificationService";
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		super.onCreate();
+		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 	}
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 	}
 
