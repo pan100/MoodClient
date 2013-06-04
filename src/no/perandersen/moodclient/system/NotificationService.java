@@ -21,7 +21,9 @@ public class NotificationService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// TODO Auto-generated method stub
+		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		
+		
 		return super.onStartCommand(intent, flags, startId);
 	}
 
