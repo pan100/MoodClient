@@ -8,8 +8,8 @@ public class BootReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		// TODO call setAlarms() in MoodApplication
-
+		MoodApplication app = (MoodApplication)context.getApplicationContext();
+		app.registerAlarms();
 	}
 
 }

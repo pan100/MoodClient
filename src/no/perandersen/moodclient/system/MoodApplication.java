@@ -14,6 +14,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
@@ -25,6 +27,8 @@ public class MoodApplication extends Application {
 	
 	private SharedPreferences sharedPref;
 	private HttpClient httpclient;
+	
+	private AlarmManager am;
 	
 	private ArrayList<String> notSentJson;
 	
@@ -40,9 +44,11 @@ public class MoodApplication extends Application {
  
 	@Override
 	public void onCreate() {
+		
 		super.onCreate();
 		singleton = this;
 		
+		am = (AlarmManager) getSystemService(ALARM_SERVICE);
 		httpclient = new DefaultHttpClient();
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		notSentJson = new ArrayList<String>();
@@ -53,7 +59,7 @@ public class MoodApplication extends Application {
 	public void registerAlarms() {
 		// TODO Set up the alarms that triggers the notifications.
 		
-		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+		
 		//get the set times for the alarms in the settings
 		
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -73,10 +79,30 @@ public class MoodApplication extends Application {
 		Calendar eveningCal = Calendar.getInstance();
 		eveningCal.set(Calendar.HOUR, eveningHour);
 		eveningCal.set(Calendar.MINUTE, eveningMinute);
-		
+		//TODO refactor SleepNotificationService and EveningNotificationService into one class and use flags?
+		Intent sleepNotifyIntent = new Intent(this, SleepNotificationService.class);
+		Intent eveningNotifyIntent = new Intent(this, EveningNotificationService.class);
+		PendingIntent sleepPending = PendingIntent.getService(this, 0, sleepNotifyIntent, 0);
+		PendingIntent eveningPending = PendingIntent.getService(this, 0, eveningNotifyIntent, 0);
 		//first, remember to clear existing alarms (this method can be called when settings are changed)
-		
-		
+		am.cancel(sleepPending);
+		am.cancel(eveningPending);
+		//then set the alarms
+		am.setRepeating(AlarmManager.RTC_WAKEUP, sleepCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY , sleepPending);
+		am.setRepeating(AlarmManager.RTC_WAKEUP, eveningCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY , eveningPending);
+	}
+	/**
+	 * Used for cancelling alarms on termination
+	 */
+	public void cancelAlarms() {
+		//TODO refactor SleepNotificationService and EveningNotificationService into one class and use flags?
+		Intent sleepNotifyIntent = new Intent(this, SleepNotificationService.class);
+		Intent eveningNotifyIntent = new Intent(this, EveningNotificationService.class);		
+		PendingIntent sleepPending = PendingIntent.getService(this, 0, sleepNotifyIntent, 0);
+		PendingIntent eveningPending = PendingIntent.getService(this, 0, eveningNotifyIntent, 0);
+		//first, remember to clear existing alarms (this method can be called when settings are changed)
+		am.cancel(sleepPending);
+		am.cancel(eveningPending);
 	}
 
 	@Override
@@ -87,6 +113,7 @@ public class MoodApplication extends Application {
 	@Override
 	public void onTerminate() {
 		super.onTerminate();
+		cancelAlarms();
 	}
 	
 	public void submitJson(String json) {
