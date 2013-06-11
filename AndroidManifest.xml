@@ -38,6 +38,7 @@
             android:label="@string/title_activity_sleep_log"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" >
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="no.perandersen.moodclient.activities.MainActivity" />
@@ -65,7 +66,7 @@
             android:name="no.perandersen.moodclient.activities.MoodActivity"
             android:label="@string/title_activity_evening"
             android:launchMode="singleInstance" >
-            <intent-filter>
+                        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

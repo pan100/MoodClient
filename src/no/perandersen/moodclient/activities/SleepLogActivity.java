@@ -1,9 +1,11 @@
 package no.perandersen.moodclient.activities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import no.perandersen.moodclient.R;
-import no.perandersen.moodclient.R.id;
-import no.perandersen.moodclient.R.layout;
-import no.perandersen.moodclient.R.menu;
+import no.perandersen.moodclient.system.MoodApplication;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +20,8 @@ import android.widget.NumberPicker;
 import android.widget.Toast;
 
 public class SleepLogActivity extends Activity {
-
+	private NumberPicker np;
+	private Date date;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +31,7 @@ public class SleepLogActivity extends Activity {
 		
 		
 		//for the number picker
-		NumberPicker np = (NumberPicker) findViewById(R.id.np);
+		np = (NumberPicker) findViewById(R.id.np);
 	    String[] nums = new String[25];
 	    for(int i=0; i<nums.length; i++)
 	           nums[i] = Integer.toString(i);
@@ -38,6 +41,10 @@ public class SleepLogActivity extends Activity {
 	    np.setDisplayedValues(nums);
 	    np.setValue(7);
 	    np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+	    
+		//set the date TODO set it in the notification instead
+		date = new Date();
+		setTitle(DateFormat.getDateInstance().format(date));
 	}
 
 	@Override
@@ -75,6 +82,14 @@ public class SleepLogActivity extends Activity {
 	
 	public void saveAndClose(View view) {
 		
+		
+		int sleepHours = np.getValue();
+		DateFormat df = new SimpleDateFormat("dd/MM/yy");
+		String formattedDate = df.format(date);
+		MoodApplication app = (MoodApplication)this.getApplicationContext();
+		String json = "";
+		
+		app.submitJson(json);
 		//show a small toast
 		Context context = getApplicationContext();
 		CharSequence text = "Søvndata lagret... Lukker aktivitet, ha en fin dag!";

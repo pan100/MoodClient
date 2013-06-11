@@ -27,7 +27,6 @@ public class MoodApplication extends Application {
 	
 	private SharedPreferences sharedPref;
 	private HttpClient httpclient;
-	
 	private AlarmManager am;
 	
 	private ArrayList<String> notSentJson;
@@ -65,12 +64,15 @@ public class MoodApplication extends Application {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		String sleepString = sharedPref.getString("time_sleepLog", "08:00");
-		int sleepHour = Integer.parseInt(sleepString.substring(0,2));
-		int sleepMinute = Integer.parseInt(sleepString.substring(3,2));
+		String[] pieces = sleepString.split(":");
+		int sleepHour = Integer.parseInt(pieces[0]);
+		int sleepMinute = Integer.parseInt(pieces[1]);
 		
 		String eveningString = sharedPref.getString("time_eveningLog", "20:00");
-		int eveningHour = Integer.parseInt(eveningString.substring(0,2));
-		int eveningMinute = Integer.parseInt(eveningString.substring(3,2));		
+		pieces = null;
+		pieces = eveningString.split(":");
+		int eveningHour = Integer.parseInt(pieces[0]);
+		int eveningMinute = Integer.parseInt(pieces[1]);	
 		//create calendar objects pointing to the next time this clock will occur
 		Calendar sleepCal = Calendar.getInstance();
 		sleepCal.set(Calendar.HOUR, sleepHour);
@@ -116,8 +118,10 @@ public class MoodApplication extends Application {
 		cancelAlarms();
 	}
 	
-	public void submitJson(String json) {
+	public boolean submitJson(String json) {
 		//attempt to send json to server, if exception save it for later
+		//TODO over to https://
+		boolean success = false;
 		HttpPost httppost = new HttpPost("http://" + sharedPref.getString("connection_server_uri", "thresher.uib.no"));
 		try {
 			StringEntity postContent = new StringEntity(json);
@@ -125,6 +129,9 @@ public class MoodApplication extends Application {
 			httppost.setEntity(postContent);
 			try {
 				HttpResponse response = httpclient.execute(httppost);
+				Log.v(TAG, response.toString());
+				success = true;
+				
 			} catch (ClientProtocolException e) {
 				notSentJson.add(json);
 				Log.v(TAG, e.getMessage());
@@ -138,6 +145,17 @@ public class MoodApplication extends Application {
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			Log.v(TAG, e.getMessage());
+		}
+		return success;
+	}
+	/**
+	 * This method simply attempts to send and removes. The submitJson is designed so that the json strings will be put back into the arraylist
+	 * if the sending fails for some reason.
+	 */
+	public void attemptSendNotSent() {
+		for(String json : notSentJson) {
+			submitJson(json);
+			notSentJson.remove(json);
 		}
 	}
 }
