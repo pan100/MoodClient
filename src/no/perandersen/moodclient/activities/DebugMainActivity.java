@@ -39,9 +39,6 @@ public class DebugMainActivity extends Activity {
 		Intent startActivityIntent = null;
 		
 		switch(b.getId()) {
-		case R.id.EditTodayButton:
-			startActivityIntent = new Intent(DebugMainActivity.this, EditTodayActivity.class);
-			break;
 		case R.id.MainActivityButton:
 			startActivityIntent = new Intent(DebugMainActivity.this, MainActivity.class);
 			break;
@@ -50,7 +47,10 @@ public class DebugMainActivity extends Activity {
 			break;
 		case R.id.SleepLogActivityButton:
 			startActivityIntent = new Intent(DebugMainActivity.this, SleepLogActivity.class);
-			break;	
+			break;
+		case R.id.EveningButton:
+			startActivityIntent = new Intent(DebugMainActivity.this, MoodActivity.class);
+			break;		
 		}
 		if(startActivityIntent != null) {
 			DebugMainActivity.this.startActivity(startActivityIntent);			

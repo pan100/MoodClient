@@ -1,4 +1,4 @@
-package no.perandersen.moodclient.system;
+package no.perandersen.moodclient.application;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

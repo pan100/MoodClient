@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import no.perandersen.moodclient.R;
-import no.perandersen.moodclient.system.MoodApplication;
+import no.perandersen.moodclient.application.MoodApplication;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -81,7 +81,6 @@ public class SleepLogActivity extends Activity {
 	 */
 	
 	public void saveAndClose(View view) {
-		
 		
 		int sleepHours = np.getValue();
 		DateFormat df = new SimpleDateFormat("dd/MM/yy");

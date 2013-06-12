@@ -1,7 +1,7 @@
 package no.perandersen.moodclient.fragments;
 
 import no.perandersen.moodclient.R;
-import no.perandersen.moodclient.system.MoodApplication;
+import no.perandersen.moodclient.application.MoodApplication;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -3,8 +3,8 @@ package no.perandersen.moodclient.activities;
 import java.util.Date;
 
 import no.perandersen.moodclient.R;
-import no.perandersen.moodclient.system.RangeSeekBar;
-import no.perandersen.moodclient.system.RangeSeekBar.OnRangeSeekBarChangeListener;
+import no.perandersen.moodclient.guiwidgets.RangeSeekBar;
+import no.perandersen.moodclient.guiwidgets.RangeSeekBar.OnRangeSeekBarChangeListener;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,9 +1,12 @@
-package no.perandersen.moodclient.system;
+package no.perandersen.moodclient.application;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import no.perandersen.moodclient.system.EveningNotificationService;
+import no.perandersen.moodclient.system.SleepNotificationService;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -25,6 +28,10 @@ public class MoodApplication extends Application {
 	private static final String TAG = "MoodActivity";
 	private static MoodApplication singleton;
 	
+	//should be https:// in prod.
+	public static final String TRANSFERPROTOCOL = "http://";
+	
+	Persister persister;
 	private SharedPreferences sharedPref;
 	private HttpClient httpclient;
 	private AlarmManager am;
@@ -46,7 +53,7 @@ public class MoodApplication extends Application {
 		
 		super.onCreate();
 		singleton = this;
-		
+		persister = new Persister();
 		am = (AlarmManager) getSystemService(ALARM_SERVICE);
 		httpclient = new DefaultHttpClient();
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -156,6 +163,19 @@ public class MoodApplication extends Application {
 		for(String json : notSentJson) {
 			submitJson(json);
 			notSentJson.remove(json);
+		}
+	}
+	
+	/*
+	 * Call the persist method on the Persister with a Day object and a password and forget about it. The 
+	 * Persister eithersends it to the server immediately or saves it so that it can be sent later. To send
+	 * not sent days call the persistNotSent() method. This is normally done by NetworkChangeReceiver, a
+	 * BroadcastReceiver set to trigger when wifi or mobile network is available.
+	 */
+	private class Persister {
+
+		private Persister() {
+			
 		}
 	}
 }

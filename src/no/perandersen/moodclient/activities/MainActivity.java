@@ -1,13 +1,15 @@
 package no.perandersen.moodclient.activities;
 
 import no.perandersen.moodclient.R;
-import no.perandersen.moodclient.R.layout;
-import no.perandersen.moodclient.R.menu;
-import android.os.Bundle;
+import no.perandersen.moodclient.application.MoodApplication;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 
 public class MainActivity extends Activity {
 
@@ -15,6 +17,10 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+	    WebView webview = (WebView)findViewById(R.id.mainWebView);
+	    webview.getSettings().setJavaScriptEnabled(true);
+	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	    webview.loadUrl(MoodApplication.TRANSFERPROTOCOL + prefs.getString("connection_server_uri", "thresher.uib.no"));
 	}
 
 	@Override

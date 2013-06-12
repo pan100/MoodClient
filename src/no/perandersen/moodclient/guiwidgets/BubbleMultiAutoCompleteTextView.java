@@ -1,4 +1,4 @@
-package no.perandersen.moodclient.system;
+package no.perandersen.moodclient.guiwidgets;
 
 import no.perandersen.moodclient.R;
 import android.app.Activity;

@@ -14,19 +14,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
-        android:id="@+id/TextAndImageLogActivityButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/SleepLogActivityButton"
-        android:layout_centerHorizontal="true"
-        android:onClick="openSelectedActivity"
-        android:text="@string/title_activity_text_and_image_log" />
-
-    <Button
         android:id="@+id/MedicineLoggerActivityButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextAndImageLogActivityButton"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:onClick="openSelectedActivity"
         android:text="@string/title_activity_medicine_log" />
@@ -50,12 +41,11 @@
         android:text="Hovedaktivitet" />
 
     <Button
-        android:id="@+id/EditTodayButton"
+        android:id="@+id/EveningButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/MainActivityButton"
+        android:layout_below="@+id/SleepLogActivityButton"
         android:layout_centerHorizontal="true"
-        android:onClick="openSelectedActivity"
-        android:text="@string/title_activity_edit_today" />
+        android:text="Kveldslogging" />
 
 </RelativeLayout>

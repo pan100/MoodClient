@@ -1,4 +1,4 @@
-package no.perandersen.moodclient.system;
+package no.perandersen.moodclient.guiwidgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
