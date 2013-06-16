@@ -24,6 +24,8 @@ import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.perandersen.moodclient.model.Day;
+
 public class MoodApplication extends Application {
 	private static final String TAG = "MoodActivity";
 	private static MoodApplication singleton;
@@ -33,10 +35,7 @@ public class MoodApplication extends Application {
 	
 	Persister persister;
 	private SharedPreferences sharedPref;
-	private HttpClient httpclient;
 	private AlarmManager am;
-	
-	private ArrayList<String> notSentJson;
 	
 	public MoodApplication getInstance() {
 		return singleton;
@@ -55,9 +54,7 @@ public class MoodApplication extends Application {
 		singleton = this;
 		persister = new Persister();
 		am = (AlarmManager) getSystemService(ALARM_SERVICE);
-		httpclient = new DefaultHttpClient();
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-		notSentJson = new ArrayList<String>();
 		
 		registerAlarms();
 	}
@@ -125,56 +122,22 @@ public class MoodApplication extends Application {
 		cancelAlarms();
 	}
 	
-	public boolean submitJson(String json) {
-		//attempt to send json to server, if exception save it for later
-		//TODO over to https://
-		boolean success = false;
-		HttpPost httppost = new HttpPost("http://" + sharedPref.getString("connection_server_uri", "thresher.uib.no"));
-		try {
-			StringEntity postContent = new StringEntity(json);
-			httppost.addHeader("content-type", "contcation/json");
-			httppost.setEntity(postContent);
-			try {
-				HttpResponse response = httpclient.execute(httppost);
-				Log.v(TAG, response.toString());
-				success = true;
-				
-			} catch (ClientProtocolException e) {
-				notSentJson.add(json);
-				Log.v(TAG, e.getMessage());
-			} catch (IOException e) {
-				notSentJson.add(json);
-				Log.v(TAG, e.getMessage());
-			}
-			finally {
-				httpclient.getConnectionManager().shutdown();
-			}
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			Log.v(TAG, e.getMessage());
-		}
-		return success;
-	}
-	/**
-	 * This method simply attempts to send and removes. The submitJson is designed so that the json strings will be put back into the arraylist
-	 * if the sending fails for some reason.
-	 */
-	public void attemptSendNotSent() {
-		for(String json : notSentJson) {
-			submitJson(json);
-			notSentJson.remove(json);
-		}
-	}
-	
 	/*
 	 * Call the persist method on the Persister with a Day object and a password and forget about it. The 
-	 * Persister eithersends it to the server immediately or saves it so that it can be sent later. To send
+	 * Persister either sends it to the server immediately or saves it so that it can be sent later. To send
 	 * not sent days call the persistNotSent() method. This is normally done by NetworkChangeReceiver, a
 	 * BroadcastReceiver set to trigger when wifi or mobile network is available.
 	 */
 	private class Persister {
-
-		private Persister() {
+		private ArrayList<Day> notSent;
+		private HttpClient httpclient;
+		public Persister() {
+			notSent = new ArrayList<Day>();
+			httpclient = new DefaultHttpClient();
+		}
+		
+		public void persist(Day day) {
+			//attempt to send this to the server
 			
 		}
 	}
