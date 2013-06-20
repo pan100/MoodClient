@@ -23,7 +23,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 			Log.d("Network Available ", "Flag No 1");
 			// Persist not persisted days
 			MoodApplication app = (MoodApplication) context.getApplicationContext();
-			app.attemptSendNotSent();
+			//app.attemptSendNotSent();
 		}
 	}
 

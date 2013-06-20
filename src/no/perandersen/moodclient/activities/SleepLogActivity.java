@@ -88,7 +88,7 @@ public class SleepLogActivity extends Activity {
 		MoodApplication app = (MoodApplication)this.getApplicationContext();
 		String json = "";
 		
-		app.submitJson(json);
+		//app.submitJson(json);
 		//show a small toast
 		Context context = getApplicationContext();
 		CharSequence text = "Søvndata lagret... Lukker aktivitet, ha en fin dag!";
