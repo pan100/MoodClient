@@ -1,6 +1,7 @@
-package no.perandersen.moodclient.activities;
+package no.perandersen.moodclient.activities.old;
 
 import no.perandersen.moodclient.R;
+import no.perandersen.moodclient.activities.MainActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

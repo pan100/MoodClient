@@ -1,4 +1,4 @@
-package no.perandersen.moodclient.activities;
+package no.perandersen.moodclient.activities.old;
 import no.perandersen.moodclient.R;
 import no.perandersen.moodclient.R.layout;
 import no.perandersen.moodclient.R.menu;
