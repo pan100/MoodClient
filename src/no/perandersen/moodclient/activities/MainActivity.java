@@ -17,16 +17,12 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-	    WebView webview = (WebView)findViewById(R.id.mainWebView);
-	    webview.getSettings().setJavaScriptEnabled(true);
-	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-	    webview.loadUrl(MoodApplication.TRANSFERPROTOCOL + prefs.getString("connection_server_uri", "thresher.uib.no"));
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_debug_main, menu);
+		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 	
