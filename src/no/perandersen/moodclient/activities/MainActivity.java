@@ -1,19 +1,24 @@
 package no.perandersen.moodclient.activities;
 
 import no.perandersen.moodclient.R;
+import no.perandersen.moodclient.application.MoodApplication;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	SharedPreferences prefs;
@@ -63,5 +68,25 @@ public class MainActivity extends Activity {
 	public void sleepLogButton(View view) {
 		startActivity(new Intent(this, SleepLogActivity.class));
 	}
+	
+	public void sendOffline(View v) {
+		MoodApplication app = (MoodApplication)getApplicationContext();
+		new SaveJsonTask().execute(app);
+	}
+	
+	private class SaveJsonTask extends AsyncTask<Context, Void, Void> {
+		@Override
+		protected void onPostExecute(Void v) {
+
+		}
+
+		@Override
+		protected Void doInBackground(Context... arg0) {
+			MoodApplication app = (MoodApplication)getApplicationContext();
+			app.persister.sendDaysInTempFile();
+			return null;
+		}
+	}
+
 
 }

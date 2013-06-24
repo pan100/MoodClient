@@ -4,9 +4,12 @@ import java.util.Date;
 
 import no.perandersen.moodclient.R;
 import no.perandersen.moodclient.application.MoodApplication;
+import no.perandersen.moodclient.fragments.DatePickerFragment;
+import no.perandersen.moodclient.fragments.PasswordDialogBuilder;
 import no.perandersen.moodclient.model.Day;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,10 +28,12 @@ import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.Toast;
 
-public class SleepLogActivity extends Activity {
+public class SleepLogActivity extends Activity implements MoodClientActivity{
 	private NumberPicker np;
+	private Button dateButton;
 	private Day.DayBuilder dayBuilder;
 	private SharedPreferences prefs;
+	private Date date;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,10 @@ public class SleepLogActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		dateButton = (Button) findViewById(R.id.dateButton);
+		date = new Date();
+		dateButton.setText(android.text.format.DateFormat.getDateFormat(getApplicationContext()).format(date));
 		
 		// for the number picker
 		np = (NumberPicker) findViewById(R.id.np);
@@ -49,16 +58,14 @@ public class SleepLogActivity extends Activity {
 		np.setWrapSelectorWheel(false);
 		np.setDisplayedValues(nums);
 		np.setValue(7);
-		//TODO dates
-		dayBuilder = new Day.DayBuilder(new Date(), prefs.getString("connection_username", ""));
+		dayBuilder = new Day.DayBuilder(date, prefs.getString("connection_username", ""));
 		dayBuilder.sleepHours(7);
+		
 		np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-		np.setOnValueChangedListener(new OnValueChangeListener() {
-			
+		np.setOnValueChangedListener(new OnValueChangeListener() {	
 			@Override
 			public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
 				dayBuilder.sleepHours(newVal);
-				
 			}
 		});
 	}
@@ -84,7 +91,6 @@ public class SleepLogActivity extends Activity {
 
 			// commented out because of frustration.
 			// NavUtils.navigateUpFromSameTask(this);
-
 			// instead hard coded
 			startActivity(new Intent(this, MainActivity.class));
 			return true;
@@ -93,6 +99,18 @@ public class SleepLogActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void setDateClick(View view) {
+	    DialogFragment newFragment = new DatePickerFragment();
+	    ((DatePickerFragment) newFragment).setDate(date);
+	    newFragment.show(this.getFragmentManager(), "Velg dato for logging");
+	}
+	
+	public void dateSetCallback(Date date) {
+		this.date = date;
+		dateButton.setText(android.text.format.DateFormat.getDateFormat(getApplicationContext()).format(date));
+		dayBuilder.changeDate(date);
 	}
 
 	/*
@@ -103,28 +121,7 @@ public class SleepLogActivity extends Activity {
 
 	public void saveAndClose(View view) {
 		//ask the user for his password
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-		alert.setTitle("Passord");
-		alert.setMessage("Du må trykke inn ditt passord for å lagre dataene på Stemningsloggens server");
-
-		// Set an EditText view to get user input 
-		final EditText input = new EditText(this);
-		input.setTransformationMethod(PasswordTransformationMethod.getInstance());
-		alert.setView(input);
-
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		  String value = input.getText().toString();
-		  save(value);
-		  }
-		});
-
-		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		  public void onClick(DialogInterface dialog, int whichButton) {
-		    // Canceled.
-		  }
-		});
+		PasswordDialogBuilder alert = new PasswordDialogBuilder(this);
 
 		alert.show();
 	}
@@ -142,11 +139,7 @@ public class SleepLogActivity extends Activity {
 		@Override
 		protected String doInBackground(Day... params) {
 			MoodApplication app = (MoodApplication)getApplicationContext();
-			boolean isSent = app.persister.persist(params[0]);
-			if(isSent) {
-				return "Lagret på server";
-			}
-			else return "Server ble ikke nådd. Prøver igjen når du er på nett neste gang.";
+			return app.persister.persist(params[0]);
 		}
 
 		@Override

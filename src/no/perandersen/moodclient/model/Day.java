@@ -33,7 +33,7 @@ public class Day implements JSONable {
 	private final String diaryText;
 
 	public static class DayBuilder {
-		private final Date date; // required
+		private Date date; // required but not necessarily final
 		private final String username; // required
 		
 		private String password;
@@ -46,6 +46,11 @@ public class Day implements JSONable {
 		public DayBuilder(Date date, String username) {
 			this.date = date;
 			this.username = username;
+		}
+		
+		public DayBuilder changeDate(Date date) {
+			this.date = date;
+			return this;
 		}
 		
 		public DayBuilder password(String pass) {
