@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">Life Charting App</string>
+    <string name="app_name">Stemningsloggen</string>
     <string name="menu_settings">Innstillinger</string>
     <string name="title_activity_sleep_log">God morgen!</string>
     <string name="sleep_log_explanation">Hvor lenge har du sovet?</string>
@@ -54,6 +53,9 @@
     <string name="username">Brukernavn</string>
     <string name="password">Passord</string>
     <string name="authenticate">Autentiser</string>
-    <string name="running_summary">Applikasjonen kjører og alarmer er registrerte. Du kan avinstallere appen via Android Market.</string>
-
+    <string name="dialog_username_not_set">Brukernavn er ikke satt. Du vil bli bragt til innstillinger hvor du kan sette inn dette.</string>
+	<string name="ok">OK</string>
+	<string name="webinterface">Webgrensesnitt</string>
+	<string name="is_for_date">Gjelder for dato:</string>
+	<string name="log_sleep">Logg søvn</string>
 </resources>

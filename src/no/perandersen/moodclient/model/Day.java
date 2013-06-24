@@ -1,7 +1,13 @@
-package com.perandersen.moodclient.model;
+package no.perandersen.moodclient.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
 
 /*
  * Class Day
@@ -10,9 +16,14 @@ import java.util.Date;
  */
 
 //Builder Pattern
-public class Day {
+public class Day implements JSONable {
+	private static final String TAG = "Day";
 	private final Date date; // required
 	private final String username; // required
+	
+	//must be set before building
+	private final String password;
+	
 	// the preceding fields are optional, but at least one should be in the
 	// object or it makes no sense
 	private final Integer sleepHours;			//Integer to check for null values
@@ -24,7 +35,8 @@ public class Day {
 	public static class DayBuilder {
 		private final Date date; // required
 		private final String username; // required
-
+		
+		private String password;
 		private Integer sleepHours;
 		private Integer moodHigh;
 		private Integer moodLow;
@@ -36,6 +48,10 @@ public class Day {
 			this.username = username;
 		}
 		
+		public DayBuilder password(String pass) {
+			password = pass;
+			return this;
+		}
 		public DayBuilder sleepHours(int val) {
 			sleepHours = val;
 			return this;
@@ -52,9 +68,14 @@ public class Day {
 			triggers.add(trigger);
 			return this;
 		}
+		
+		public Day build() {
+			return new Day(this);
+		}
 	}
 
 	private Day(DayBuilder builder) {
+		password = builder.password;
 		date = builder.date;
 		username = builder.username;
 		moodLow = builder.moodLow;
@@ -65,9 +86,29 @@ public class Day {
 		
 	}
 
-	public String JSON() {
-		// return the json string using http://json.org/java/
+		/**
+		 * When using toJSONObject, remember to put password on to object before sending but not
+		 * before serializing
+		 */
+	@Override
+	public JSONObject toJSONObject() throws JSONException {
+		JSONObject jo = new JSONObject();
+		//date to be dd.mm.yyyy
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		String dateString = sdf.format(date);
+		Log.v(TAG, "date was formatted as " + sdf.format(date));
+		jo.put("date", dateString);
+		jo.put("username", username);
+		jo.put("password", password);
+		if(sleepHours != null) {
+			jo.put("sleepHours", sleepHours.toString());
+		}
+		return jo;
+	}
+
+	@Override
+	public void fromJSONObject(JSONObject src) {
+		// TODO Auto-generated method stub
 		
-		return null;
 	}
 }

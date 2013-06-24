@@ -31,20 +31,8 @@
 
         <activity
             android:name="no.perandersen.moodclient.activities.MainActivity"
-            android:label="@string/title_activity_main" >
-        </activity>
-        <activity
-            android:name="no.perandersen.moodclient.activities.SleepLogActivity"
-            android:label="@string/title_activity_sleep_log"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="no.perandersen.moodclient.activities.MainActivity" />
-        </activity>
-        <activity
-            android:name="no.perandersen.moodclient.activities.DebugMainActivity"
-            android:label="@string/title_activity_debug_main" >
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,33 +40,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="no.perandersen.moodclient.activities.EditTodayActivity"
-            android:label="@string/title_activity_edit_today"
-            android:launchMode="singleInstance" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="no.perandersen.moodclient.activities.MainActivity" />
-        </activity>
-        <activity
             android:name="no.perandersen.moodclient.activities.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/app_name"
+            android:parentActivityName="no.perandersen.moodclient.activities.MainActivity" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="no.perandersen.moodclient.activities.MainActivity" />
         </activity>
         <activity
-            android:name="no.perandersen.moodclient.activities.MoodActivity"
-            android:label="@string/title_activity_evening"
-            android:launchMode="singleInstance" >
-        </activity>
-        <activity
-            android:name="no.perandersen.moodclient.activities.TriggersDiaryActivity"
-            android:label="@string/title_activity_triggers_diary"
-            android:launchMode="singleInstance"
-            android:parentActivityName="no.perandersen.moodclient.activities.MoodActivity" >
+            android:name="no.perandersen.moodclient.activities.SleepLogActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="no.perandersen.moodclient.activities.MainActivity" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="no.perandersen.moodclient.activities.MoodActivity" />
+                android:value="no.perandersen.moodclient.activities.MainActivity" />
         </activity>
     </application>
 

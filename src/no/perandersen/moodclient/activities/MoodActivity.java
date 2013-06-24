@@ -1,4 +1,4 @@
-package no.perandersen.moodclient.activities.old;
+package no.perandersen.moodclient.activities;
 
 import java.util.Date;
 

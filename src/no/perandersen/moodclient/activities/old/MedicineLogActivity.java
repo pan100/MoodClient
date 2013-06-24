@@ -2,6 +2,7 @@ package no.perandersen.moodclient.activities.old;
 import no.perandersen.moodclient.R;
 import no.perandersen.moodclient.R.layout;
 import no.perandersen.moodclient.R.menu;
+import no.perandersen.moodclient.activities.SettingsActivity;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;

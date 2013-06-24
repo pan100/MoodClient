@@ -2,6 +2,9 @@ package no.perandersen.moodclient.activities.old;
 
 import no.perandersen.moodclient.R;
 import no.perandersen.moodclient.activities.MainActivity;
+import no.perandersen.moodclient.activities.MoodActivity;
+import no.perandersen.moodclient.activities.SettingsActivity;
+import no.perandersen.moodclient.activities.SleepLogActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

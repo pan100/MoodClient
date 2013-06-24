@@ -1,4 +1,4 @@
-package no.perandersen.moodclient.activities.old;
+package no.perandersen.moodclient.activities;
 
 import java.text.DateFormat;
 import java.util.Date;

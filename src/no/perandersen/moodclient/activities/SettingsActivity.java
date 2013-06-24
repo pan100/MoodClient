@@ -1,4 +1,4 @@
-package no.perandersen.moodclient.activities.old;
+package no.perandersen.moodclient.activities;
 
 import no.perandersen.moodclient.fragments.SettingsFragment;
 import android.app.Activity;
