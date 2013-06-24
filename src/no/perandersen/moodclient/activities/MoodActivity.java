@@ -1,29 +1,55 @@
 package no.perandersen.moodclient.activities;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 import no.perandersen.moodclient.R;
+import no.perandersen.moodclient.application.MoodApplication;
+import no.perandersen.moodclient.fragments.DatePickerFragment;
 import no.perandersen.moodclient.guiwidgets.RangeSeekBar;
 import no.perandersen.moodclient.guiwidgets.RangeSeekBar.OnRangeSeekBarChangeListener;
+import no.perandersen.moodclient.model.Day;
+import no.perandersen.moodclient.model.Day.DayBuilder;
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import java.text.DateFormat;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MoodActivity extends Activity {
+public class MoodActivity extends Activity implements MoodClientActivityInterface{
 	
-	private Date date;
-
+	private Day.DayBuilder dayBuilder;
+	private SharedPreferences prefs;
+	private Button dateButton;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_evening);
-
+		
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		if(getIntent().hasExtra("DAY_BUILDER")) {
+			dayBuilder = (DayBuilder) getIntent().getSerializableExtra("DAY_BUILDER");
+		}
+		else {
+			dayBuilder = new Day.DayBuilder(new Date(), prefs.getString("connection_username", ""));
+		}
+		
+		dateButton = (Button) findViewById(R.id.dateButton);
+		dateButton.setText(android.text.format.DateFormat.getDateFormat(getApplicationContext()).format(dayBuilder.getDate()));
+		dayBuilder.moodLow(0);
+		dayBuilder.moodHigh(100);
 		// create RangeSeekBar as Integer range between 20 and 75
 		RangeSeekBar<Integer> seekBar = new RangeSeekBar<Integer>(0, 100,
 				getBaseContext());
@@ -32,6 +58,10 @@ public class MoodActivity extends Activity {
 			public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
 					Integer minValue, Integer maxValue) {
 				TextView tLow = (TextView) findViewById(R.id.minValText);
+				
+				dayBuilder.moodLow(minValue);
+				dayBuilder.moodHigh(maxValue);
+				
 				if (minValue < 10) {
 					tLow.setText(R.string.moodScale1);
 				} else if (minValue >= 10 && minValue < 20) {
@@ -77,12 +107,17 @@ public class MoodActivity extends Activity {
 		// add RangeSeekBar to pre-defined layout
 		ViewGroup layout = (ViewGroup) findViewById(R.id.groupForRange);
 		layout.addView(seekBar);
-		
-		//set the date TODO set it in the notification instead
-		date = new Date();
-		TextView dateView = (TextView) findViewById(R.id.dateTextView);
-		dateView.setText(DateFormat.getDateInstance().format(date));
-		setTitle(DateFormat.getDateInstance().format(date));
+	}
+	
+	public void setDateClick(View view) {
+	    DialogFragment newFragment = new DatePickerFragment();
+	    ((DatePickerFragment) newFragment).setDate(dayBuilder.getDate());
+	    newFragment.show(this.getFragmentManager(), "Velg dato for logging");
+	}
+	
+	public void dateSetCallback(Date date) {
+		dateButton.setText(android.text.format.DateFormat.getDateFormat(getApplicationContext()).format(date));
+		dayBuilder.changeDate(date);
 	}
 
 	@Override
@@ -100,9 +135,16 @@ public class MoodActivity extends Activity {
 	
 	public void nextButtonClick(View w) {
 		Intent startActivityIntent = new Intent(MoodActivity.this, TriggersDiaryActivity.class);
-		startActivityIntent.putExtra("DATE", date);
+		startActivityIntent.putExtra("DAY_BUILDER", dayBuilder);
 		MoodActivity.this.startActivity(startActivityIntent);
 		
 	}
+
+	@Override
+	public void save(String password) {
+		// TODO Auto-generated method stub
+		//this method might be removed from interface later (no need in this activity)
+	}
+
 
 }

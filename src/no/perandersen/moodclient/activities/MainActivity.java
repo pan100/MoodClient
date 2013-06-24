@@ -69,6 +69,10 @@ public class MainActivity extends Activity {
 		startActivity(new Intent(this, SleepLogActivity.class));
 	}
 	
+	public void eveningLogButton(View view) {
+		startActivity(new Intent(this, MoodActivity.class));
+	}
+	
 	public void sendOffline(View v) {
 		MoodApplication app = (MoodApplication)getApplicationContext();
 		new SaveJsonTask().execute(app);

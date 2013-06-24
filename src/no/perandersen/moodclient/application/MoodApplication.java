@@ -169,7 +169,7 @@ public class MoodApplication extends Application {
 			HttpConnectionParams.setConnectionTimeout(httpParams, timeout);
 			HttpConnectionParams.setSoTimeout(httpParams, timeout);
 			httpclient = new DefaultHttpClient(httpParams);
-
+			httpclient.getParams().setParameter("http.protocol.content-charset", "UTF-8");
 			serverUri = PreferenceManager.getDefaultSharedPreferences(
 					MoodApplication.this)
 					.getString("connection_server_uri", "")
@@ -285,11 +285,11 @@ public class MoodApplication extends Application {
 			HttpPost request = new HttpPost(serverUri);
 			try {
 				StringEntity se = new StringEntity(day.toJSONObject()
-						.toString());
+						.toString(), "UTF-8");
 				se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
 						"application/json"));
 				request.setEntity(se);
-				Log.v(TAG, day.toJSONObject().toString());
+				Log.v(TAG, se.toString());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				Log.e(TAG, "JSON error: " + e.getMessage());

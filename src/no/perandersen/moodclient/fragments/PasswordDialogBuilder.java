@@ -1,6 +1,6 @@
 package no.perandersen.moodclient.fragments;
 
-import no.perandersen.moodclient.activities.MoodClientActivity;
+import no.perandersen.moodclient.activities.MoodClientActivityInterface;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,7 +22,7 @@ public class PasswordDialogBuilder extends AlertDialog.Builder {
 		setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 		  String value = input.getText().toString();
-		  ((MoodClientActivity) context).save(value);
+		  ((MoodClientActivityInterface) context).save(value);
 		  }
 		});
 

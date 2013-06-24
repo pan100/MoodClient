@@ -58,4 +58,5 @@
 	<string name="webinterface">Webgrensesnitt</string>
 	<string name="is_for_date">Gjelder for dato:</string>
 	<string name="log_sleep">Logg søvn</string>
+	<string name="log_evening">Logg humør (og resten)</string>
 </resources>

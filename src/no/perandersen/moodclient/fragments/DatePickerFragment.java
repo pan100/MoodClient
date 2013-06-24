@@ -3,7 +3,7 @@ package no.perandersen.moodclient.fragments;
 import java.util.Calendar;
 import java.util.Date;
 
-import no.perandersen.moodclient.activities.MoodClientActivity;
+import no.perandersen.moodclient.activities.MoodClientActivityInterface;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -31,7 +31,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     	Calendar c = Calendar.getInstance();
     	c.set(year, month, day);
     	date = c.getTime();
-        ((MoodClientActivity) getActivity()).dateSetCallback(date);
+        ((MoodClientActivityInterface) getActivity()).dateSetCallback(date);
     	
     }
     

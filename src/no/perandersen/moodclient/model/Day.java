@@ -1,9 +1,11 @@
 package no.perandersen.moodclient.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +34,7 @@ public class Day implements JSONable {
 	private final ArrayList<String> triggers;
 	private final String diaryText;
 
-	public static class DayBuilder {
+	public static class DayBuilder implements Serializable {
 		private Date date; // required but not necessarily final
 		private final String username; // required
 		
@@ -74,6 +76,20 @@ public class Day implements JSONable {
 			return this;
 		}
 		
+		public DayBuilder setTriggers(ArrayList<String> triggers) {
+			this.triggers = triggers;
+			return this;
+		}
+		
+		public DayBuilder diaryText(String text) {
+			diaryText = text;
+			return this;
+		}
+		
+		public Date getDate() {
+			return date;
+		}
+		
 		public Day build() {
 			return new Day(this);
 		}
@@ -107,6 +123,18 @@ public class Day implements JSONable {
 		jo.put("password", password);
 		if(sleepHours != null) {
 			jo.put("sleepHours", sleepHours.toString());
+		}
+		if(moodLow != null) {
+			jo.put("moodMin", moodLow.toString());
+		}
+		if(moodHigh != null) {
+			jo.put("moodMax", moodHigh.toString());
+		}
+		if(!triggers.isEmpty()) {
+			jo.put("triggers", new JSONArray(triggers));
+		}
+		if(diaryText != null && !diaryText.equals("")) {
+			jo.put("diaryText", diaryText);
 		}
 		return jo;
 	}

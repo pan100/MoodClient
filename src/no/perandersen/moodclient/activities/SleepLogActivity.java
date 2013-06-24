@@ -7,6 +7,7 @@ import no.perandersen.moodclient.application.MoodApplication;
 import no.perandersen.moodclient.fragments.DatePickerFragment;
 import no.perandersen.moodclient.fragments.PasswordDialogBuilder;
 import no.perandersen.moodclient.model.Day;
+import no.perandersen.moodclient.model.Day.DayBuilder;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
@@ -28,12 +29,11 @@ import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.Toast;
 
-public class SleepLogActivity extends Activity implements MoodClientActivity{
+public class SleepLogActivity extends Activity implements MoodClientActivityInterface{
 	private NumberPicker np;
 	private Button dateButton;
 	private Day.DayBuilder dayBuilder;
 	private SharedPreferences prefs;
-	private Date date;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +44,7 @@ public class SleepLogActivity extends Activity implements MoodClientActivity{
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		dateButton = (Button) findViewById(R.id.dateButton);
-		date = new Date();
-		dateButton.setText(android.text.format.DateFormat.getDateFormat(getApplicationContext()).format(date));
+
 		
 		// for the number picker
 		np = (NumberPicker) findViewById(R.id.np);
@@ -58,7 +56,14 @@ public class SleepLogActivity extends Activity implements MoodClientActivity{
 		np.setWrapSelectorWheel(false);
 		np.setDisplayedValues(nums);
 		np.setValue(7);
-		dayBuilder = new Day.DayBuilder(date, prefs.getString("connection_username", ""));
+		if(getIntent().hasExtra("DAY_BUILDER")) {
+			dayBuilder = (DayBuilder) getIntent().getSerializableExtra("DAY_BUILDER");
+		}
+		else {
+			dayBuilder = new Day.DayBuilder(new Date(), prefs.getString("connection_username", ""));
+		}
+		dateButton = (Button) findViewById(R.id.dateButton);
+		dateButton.setText(android.text.format.DateFormat.getDateFormat(getApplicationContext()).format(dayBuilder.getDate()));
 		dayBuilder.sleepHours(7);
 		
 		np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -103,12 +108,11 @@ public class SleepLogActivity extends Activity implements MoodClientActivity{
 	
 	public void setDateClick(View view) {
 	    DialogFragment newFragment = new DatePickerFragment();
-	    ((DatePickerFragment) newFragment).setDate(date);
+	    ((DatePickerFragment) newFragment).setDate(dayBuilder.getDate());
 	    newFragment.show(this.getFragmentManager(), "Velg dato for logging");
 	}
 	
 	public void dateSetCallback(Date date) {
-		this.date = date;
 		dateButton.setText(android.text.format.DateFormat.getDateFormat(getApplicationContext()).format(date));
 		dayBuilder.changeDate(date);
 	}

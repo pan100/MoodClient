@@ -24,7 +24,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 			// Persist not persisted days
 			MoodApplication app = (MoodApplication) context.getApplicationContext();
 			app.persister.sendDaysInTempFile();
-			//app.attemptSendNotSent();
 		}
 	}
 
