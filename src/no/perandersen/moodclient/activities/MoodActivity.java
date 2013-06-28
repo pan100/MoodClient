@@ -137,6 +137,7 @@ public class MoodActivity extends Activity implements MoodClientActivityInterfac
 		Intent startActivityIntent = new Intent(MoodActivity.this, TriggersDiaryActivity.class);
 		startActivityIntent.putExtra("DAY_BUILDER", dayBuilder);
 		MoodActivity.this.startActivity(startActivityIntent);
+		finish();
 		
 	}
 

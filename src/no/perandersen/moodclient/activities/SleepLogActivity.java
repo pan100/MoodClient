@@ -168,6 +168,7 @@ public class SleepLogActivity extends Activity implements MoodClientActivityInte
 					startActivity(new Intent(SleepLogActivity.this,MainActivity.class));
 				}
 			}, 2000);
+			finish();
 		}
 	}
 

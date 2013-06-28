@@ -113,6 +113,7 @@ public class TriggersDiaryActivity extends Activity implements MoodClientActivit
 		Intent startActivityIntent = new Intent(TriggersDiaryActivity.this, MoodActivity.class);
 		startActivityIntent.putExtra("DAY_BUILDER", dayBuilder);
 		TriggersDiaryActivity.this.startActivity(startActivityIntent);
+		finish();
 		
 	}
 
@@ -160,6 +161,7 @@ public class TriggersDiaryActivity extends Activity implements MoodClientActivit
 					startActivity(new Intent(TriggersDiaryActivity.this,MainActivity.class));
 				}
 			}, 2000);
+			finish();
 		}
 	}
 

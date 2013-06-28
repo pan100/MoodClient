@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 
 public class TimePreference extends DialogPreference {
+	
+	private static final String TAG = "MoodApplication";
+	
     private int lastHour=0;
     private int lastMinute=0;
     private TimePicker picker=null;
@@ -60,6 +64,7 @@ public class TimePreference extends DialogPreference {
 
         if (positiveResult) {
             lastHour=picker.getCurrentHour();
+            Log.v(TAG, "lastHour is " + lastHour);
             lastMinute=picker.getCurrentMinute();
 
             String time=String.valueOf(lastHour)+":"+String.valueOf(lastMinute);

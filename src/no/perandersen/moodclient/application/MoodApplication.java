@@ -10,9 +10,10 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
+import no.perandersen.moodclient.activities.SleepLogActivity;
 import no.perandersen.moodclient.model.Day;
-import no.perandersen.moodclient.system.EveningNotificationService;
-import no.perandersen.moodclient.system.SleepNotificationService;
+import no.perandersen.moodclient.system.EveningNotificationReceiver;
+import no.perandersen.moodclient.system.SleepNotificationReceiver;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -33,11 +34,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class MoodApplication extends Application {
+public class MoodApplication extends Application implements OnSharedPreferenceChangeListener{
 	private static final String TAG = "MoodApplication";
 	private static MoodApplication singleton;
 	private static final String FILENAME_TEMP = "moodtempfile.json";
@@ -67,18 +69,12 @@ public class MoodApplication extends Application {
 		persister = new Persister();
 		am = (AlarmManager) getSystemService(ALARM_SERVICE);
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-		
+		sharedPref.registerOnSharedPreferenceChangeListener(this);
 		registerAlarms();
 	}
 
 	public void registerAlarms() {
-		// TODO Set up the alarms that triggers the notifications.
-
-		// get the set times for the alarms in the settings
-
-		SharedPreferences sharedPref = PreferenceManager
-				.getDefaultSharedPreferences(this);
-
+		
 		String sleepString = sharedPref.getString("time_sleepLog", "08:00");
 		String[] pieces = sleepString.split(":");
 		int sleepHour = Integer.parseInt(pieces[0]);
@@ -88,36 +84,48 @@ public class MoodApplication extends Application {
 		pieces = null;
 		pieces = eveningString.split(":");
 		int eveningHour = Integer.parseInt(pieces[0]);
+		Log.v(TAG, "eveningHour in registerAlarms: " + eveningHour);
 		int eveningMinute = Integer.parseInt(pieces[1]);
+		
+		Calendar now = Calendar.getInstance();
 		// create calendar objects pointing to the next time this clock will
 		// occur
 		Calendar sleepCal = Calendar.getInstance();
-		sleepCal.set(Calendar.HOUR, sleepHour);
+		sleepCal.set(Calendar.HOUR_OF_DAY, sleepHour);
 		sleepCal.set(Calendar.MINUTE, sleepMinute);
-
+		sleepCal.set(Calendar.SECOND, 0);
+		//if the time has passed we need to add a day
+		if(now.after(sleepCal)) {
+			sleepCal.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		
 		Calendar eveningCal = Calendar.getInstance();
-		eveningCal.set(Calendar.HOUR, eveningHour);
+		eveningCal.set(Calendar.HOUR_OF_DAY, eveningHour);
 		eveningCal.set(Calendar.MINUTE, eveningMinute);
+		eveningCal.set(Calendar.SECOND, 0);
+		if(now.after(eveningCal)) {
+			eveningCal.add(Calendar.DAY_OF_MONTH, 1);
+		}	
 		// TODO refactor SleepNotificationService and EveningNotificationService
-		// into one class and use flags?
-		Intent sleepNotifyIntent = new Intent(this,
-				SleepNotificationService.class);
-		Intent eveningNotifyIntent = new Intent(this,
-				EveningNotificationService.class);
-		PendingIntent sleepPending = PendingIntent.getService(this, 0,
-				sleepNotifyIntent, 0);
-		PendingIntent eveningPending = PendingIntent.getService(this, 0,
-				eveningNotifyIntent, 0);
-		// first, remember to clear existing alarms (this method can be called
-		// when settings are changed)
-		am.cancel(sleepPending);
-		am.cancel(eveningPending);
+		// into one class and use flags? Or maybe send something with putExtra to identify which
+		// screen should be shown?
+	    Intent syncIntent = new Intent(this, SleepNotificationReceiver.class);
+	    syncIntent.putExtra("MoodSleepLogAlarm", 0);
+//		Intent eveningNotifyIntent = new Intent(this,
+//				EveningNotificationReceiver.class);
+		PendingIntent sleepPending = PendingIntent.getBroadcast(this, 0,
+				syncIntent, 0);
+//		PendingIntent eveningPending = PendingIntent.getService(this, 1,
+//				eveningNotifyIntent, 0);
+		
 		// then set the alarms
 		am.setRepeating(AlarmManager.RTC_WAKEUP, sleepCal.getTimeInMillis(),
 				AlarmManager.INTERVAL_DAY, sleepPending);
-		am.setRepeating(AlarmManager.RTC_WAKEUP, eveningCal.getTimeInMillis(),
-				AlarmManager.INTERVAL_DAY, eveningPending);
-	}
+//		am.setRepeating(AlarmManager.RTC_WAKEUP, eveningCal.getTimeInMillis(),
+//				AlarmManager.INTERVAL_DAY, eveningPending);
+		Log.v(TAG, "Alarm for sleep registered at " + sleepCal.getTime());
+//		Log.v(TAG, "Alarm for evening registered at " + eveningCal.getTime());
+		}
 
 	/**
 	 * Used for cancelling alarms on termination
@@ -125,19 +133,26 @@ public class MoodApplication extends Application {
 	public void cancelAlarms() {
 		// TODO refactor SleepNotificationService and EveningNotificationService
 		// into one class and use flags?
-		Intent sleepNotifyIntent = new Intent(this,
-				SleepNotificationService.class);
-		Intent eveningNotifyIntent = new Intent(this,
-				EveningNotificationService.class);
+	    Intent syncIntent = new Intent(this, SleepNotificationReceiver.class);
+//		Intent eveningNotifyIntent = new Intent(this,
+//				EveningNotificationService.class);
 		PendingIntent sleepPending = PendingIntent.getService(this, 0,
-				sleepNotifyIntent, 0);
-		PendingIntent eveningPending = PendingIntent.getService(this, 0,
-				eveningNotifyIntent, 0);
+				syncIntent, 0);
+//		PendingIntent eveningPending = PendingIntent.getService(this, 1,
+//				eveningNotifyIntent, 0);
 		// first, remember to clear existing alarms (this method can be called
 		// when settings are changed)
 		am.cancel(sleepPending);
-		am.cancel(eveningPending);
+		//am.cancel(eveningPending);
 	}
+	
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("time_sleepLog") || key.equals("time_eveningLog")) {
+            // call MoodApplication.registerAlarms();
+           cancelAlarms();
+           registerAlarms();
+        }
+    }
 
 	@Override
 	public void onLowMemory() {
@@ -289,7 +304,8 @@ public class MoodApplication extends Application {
 				se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
 						"application/json"));
 				request.setEntity(se);
-				Log.v(TAG, se.toString());
+				Log.v(TAG, day.toJSONObject()
+						.toString());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				Log.e(TAG, "JSON error: " + e.getMessage());

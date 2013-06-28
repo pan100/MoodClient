@@ -131,7 +131,7 @@ public class Day implements JSONable {
 			jo.put("moodMax", moodHigh.toString());
 		}
 		if(!triggers.isEmpty()) {
-			jo.put("triggers", new JSONArray(triggers));
+			jo.put("trigger", new JSONArray(triggers));
 		}
 		if(diaryText != null && !diaryText.equals("")) {
 			jo.put("diaryText", diaryText);
