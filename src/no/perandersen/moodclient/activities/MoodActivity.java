@@ -35,6 +35,7 @@ public class MoodActivity extends Activity implements MoodClientActivityInterfac
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_evening);
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);

@@ -17,7 +17,7 @@
     <application
         android:name="no.perandersen.moodclient.application.MoodApplication"
         android:allowBackup="false"
-        android:icon="@drawable/smile"
+        android:icon="@drawable/smilewhite"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <receiver android:name="no.perandersen.moodclient.application.NetworkChangeReceiver" >
@@ -88,10 +88,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="no.perandersen.moodclient.activities.MoodActivity" />
         </activity>
-        <receiver android:name="no.perandersen.moodclient.system.SleepNotificationReceiver">
+
+        <receiver android:name="no.perandersen.moodclient.system.SleepNotificationReceiver" >
             <intent-filter>
                 <action android:name="MoodSleepLogAlarm" />
             </intent-filter>
         </receiver>
+        <receiver android:name="no.perandersen.moodclient.system.EveningNotificationReceiver" >
+            <intent-filter>
+                <action android:name="MoodEveningLogAlarm" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="no.perandersen.moodclient.application.BootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
+
 </manifest>

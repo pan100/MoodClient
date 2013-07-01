@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
-import no.perandersen.moodclient.activities.SleepLogActivity;
 import no.perandersen.moodclient.model.Day;
 import no.perandersen.moodclient.system.EveningNotificationReceiver;
 import no.perandersen.moodclient.system.SleepNotificationReceiver;
@@ -50,7 +49,8 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 	public Persister persister;
 	private SharedPreferences sharedPref;
 	private AlarmManager am;
-
+	private int notificationCount;
+	
 	public MoodApplication getInstance() {
 		return singleton;
 
@@ -66,6 +66,7 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 
 		super.onCreate();
 		singleton = this;
+		notificationCount = 0;
 		persister = new Persister();
 		am = (AlarmManager) getSystemService(ALARM_SERVICE);
 		sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -109,22 +110,23 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 		// TODO refactor SleepNotificationService and EveningNotificationService
 		// into one class and use flags? Or maybe send something with putExtra to identify which
 		// screen should be shown?
-	    Intent syncIntent = new Intent(this, SleepNotificationReceiver.class);
-	    syncIntent.putExtra("MoodSleepLogAlarm", 0);
-//		Intent eveningNotifyIntent = new Intent(this,
-//				EveningNotificationReceiver.class);
+	    Intent morningIntent = new Intent(this, SleepNotificationReceiver.class);
+	    morningIntent.putExtra("MoodSleepLogAlarm", 0);
+		Intent eveningIntent = new Intent(this,
+				EveningNotificationReceiver.class);
+		eveningIntent.putExtra("MoodEveningLogAlarm", 0);
 		PendingIntent sleepPending = PendingIntent.getBroadcast(this, 0,
-				syncIntent, 0);
-//		PendingIntent eveningPending = PendingIntent.getService(this, 1,
-//				eveningNotifyIntent, 0);
+				morningIntent, 0);
+		PendingIntent eveningPending = PendingIntent.getBroadcast(this, 1,
+				eveningIntent, 0);
 		
 		// then set the alarms
 		am.setRepeating(AlarmManager.RTC_WAKEUP, sleepCal.getTimeInMillis(),
 				AlarmManager.INTERVAL_DAY, sleepPending);
-//		am.setRepeating(AlarmManager.RTC_WAKEUP, eveningCal.getTimeInMillis(),
-//				AlarmManager.INTERVAL_DAY, eveningPending);
+		am.setRepeating(AlarmManager.RTC_WAKEUP, eveningCal.getTimeInMillis(),
+				AlarmManager.INTERVAL_DAY, eveningPending);
 		Log.v(TAG, "Alarm for sleep registered at " + sleepCal.getTime());
-//		Log.v(TAG, "Alarm for evening registered at " + eveningCal.getTime());
+		Log.v(TAG, "Alarm for evening registered at " + eveningCal.getTime());
 		}
 
 	/**
@@ -163,6 +165,11 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 	public void onTerminate() {
 		super.onTerminate();
 		cancelAlarms();
+	}
+	
+	public int newNotificationID() {
+		notificationCount++;
+		return notificationCount;
 	}
 
 	/*
