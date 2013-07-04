@@ -63,44 +63,36 @@ public class MoodActivity extends Activity implements MoodClientActivityInterfac
 				dayBuilder.moodLow(minValue);
 				dayBuilder.moodHigh(maxValue);
 				
-				if (minValue < 10) {
+				if (minValue < 12) {
 					tLow.setText(R.string.moodScale1);
-				} else if (minValue >= 10 && minValue < 20) {
+				} else if (minValue >= 12 && minValue < 25) {
 					tLow.setText(R.string.moodScale2);
-				} else if (minValue >= 20 && minValue < 30) {
+				} else if (minValue >= 25 && minValue < 37) {
 					tLow.setText(R.string.moodScale3);
-				} else if (minValue >= 30 && minValue < 40) {
+				} else if (minValue >= 37 && minValue < 50) {
 					tLow.setText(R.string.moodScale4);
-				} else if (minValue >= 40 && minValue < 60) {
+				} else if (minValue >= 50 && minValue < 62) {
 					tLow.setText(R.string.moodScale5);
-				} else if (minValue >= 60 && minValue < 70) {
+				} else if (minValue >= 62 && minValue < 75) {
 					tLow.setText(R.string.moodScale6);
-				} else if (minValue >= 70 && minValue < 80) {
+				} else if (minValue >= 75 && minValue < 88) {
 					tLow.setText(R.string.moodScale7);
-				} else if (minValue >= 80 && minValue < 90) {
-					tLow.setText(R.string.moodScale8);
-				} else if (minValue >= 90 && minValue <= 100) {
-					tLow.setText(R.string.moodScale9);
 				}
 				TextView tHigh = (TextView) findViewById(R.id.maxValText);
 				if (maxValue < 10) {
 					tHigh.setText(R.string.moodScale1);
-				} else if (maxValue >= 10 && maxValue < 20) {
+				} else if (maxValue >= 12 && maxValue < 25) {
 					tHigh.setText(R.string.moodScale2);
-				} else if (maxValue >= 20 && maxValue < 30) {
+				} else if (maxValue >= 25 && maxValue < 37) {
 					tHigh.setText(R.string.moodScale3);
-				} else if (maxValue >= 30 && maxValue < 40) {
+				} else if (maxValue >= 37 && maxValue < 50) {
 					tHigh.setText(R.string.moodScale4);
-				} else if (maxValue >= 40 && maxValue < 60) {
+				} else if (maxValue >= 50 && maxValue < 62) {
 					tHigh.setText(R.string.moodScale5);
-				} else if (maxValue >= 60 && maxValue < 70) {
+				} else if (maxValue >= 62 && minValue < 75) {
 					tHigh.setText(R.string.moodScale6);
-				} else if (maxValue >= 70 && maxValue < 80) {
+				} else if (maxValue >= 75 && minValue < 88) {
 					tHigh.setText(R.string.moodScale7);
-				} else if (maxValue >= 80 && maxValue < 90) {
-					tHigh.setText(R.string.moodScale8);
-				} else if (maxValue >= 90 && maxValue <= 100) {
-					tHigh.setText(R.string.moodScale9);
 				}
 			}
 		});
