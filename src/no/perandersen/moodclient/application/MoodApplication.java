@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -50,7 +51,7 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 	private SharedPreferences sharedPref;
 	private AlarmManager am;
 	private int notificationCount;
-	
+
 	public MoodApplication getInstance() {
 		return singleton;
 
@@ -75,7 +76,7 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 	}
 
 	public void registerAlarms() {
-		
+
 		String sleepString = sharedPref.getString("time_sleepLog", "08:00");
 		String[] pieces = sleepString.split(":");
 		int sleepHour = Integer.parseInt(pieces[0]);
@@ -87,7 +88,7 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 		int eveningHour = Integer.parseInt(pieces[0]);
 		Log.v(TAG, "eveningHour in registerAlarms: " + eveningHour);
 		int eveningMinute = Integer.parseInt(pieces[1]);
-		
+
 		Calendar now = Calendar.getInstance();
 		// create calendar objects pointing to the next time this clock will
 		// occur
@@ -99,7 +100,7 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 		if(now.after(sleepCal)) {
 			sleepCal.add(Calendar.DAY_OF_MONTH, 1);
 		}
-		
+
 		Calendar eveningCal = Calendar.getInstance();
 		eveningCal.set(Calendar.HOUR_OF_DAY, eveningHour);
 		eveningCal.set(Calendar.MINUTE, eveningMinute);
@@ -110,8 +111,8 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 		// TODO refactor SleepNotificationService and EveningNotificationService
 		// into one class and use flags? Or maybe send something with putExtra to identify which
 		// screen should be shown?
-	    Intent morningIntent = new Intent(this, SleepNotificationReceiver.class);
-	    morningIntent.putExtra("MoodSleepLogAlarm", 0);
+		Intent morningIntent = new Intent(this, SleepNotificationReceiver.class);
+		morningIntent.putExtra("MoodSleepLogAlarm", 0);
 		Intent eveningIntent = new Intent(this,
 				EveningNotificationReceiver.class);
 		eveningIntent.putExtra("MoodEveningLogAlarm", 0);
@@ -119,7 +120,7 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 				morningIntent, 0);
 		PendingIntent eveningPending = PendingIntent.getBroadcast(this, 1,
 				eveningIntent, 0);
-		
+
 		// then set the alarms
 		am.setRepeating(AlarmManager.RTC_WAKEUP, sleepCal.getTimeInMillis(),
 				AlarmManager.INTERVAL_DAY, sleepPending);
@@ -127,7 +128,7 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 				AlarmManager.INTERVAL_DAY, eveningPending);
 		Log.v(TAG, "Alarm for sleep registered at " + sleepCal.getTime());
 		Log.v(TAG, "Alarm for evening registered at " + eveningCal.getTime());
-		}
+	}
 
 	/**
 	 * Used for cancelling alarms on termination
@@ -135,26 +136,26 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 	public void cancelAlarms() {
 		// TODO refactor SleepNotificationService and EveningNotificationService
 		// into one class and use flags?
-	    Intent syncIntent = new Intent(this, SleepNotificationReceiver.class);
-//		Intent eveningNotifyIntent = new Intent(this,
-//				EveningNotificationService.class);
+		Intent syncIntent = new Intent(this, SleepNotificationReceiver.class);
+		//		Intent eveningNotifyIntent = new Intent(this,
+		//				EveningNotificationService.class);
 		PendingIntent sleepPending = PendingIntent.getService(this, 0,
 				syncIntent, 0);
-//		PendingIntent eveningPending = PendingIntent.getService(this, 1,
-//				eveningNotifyIntent, 0);
+		//		PendingIntent eveningPending = PendingIntent.getService(this, 1,
+		//				eveningNotifyIntent, 0);
 		// first, remember to clear existing alarms (this method can be called
 		// when settings are changed)
 		am.cancel(sleepPending);
 		//am.cancel(eveningPending);
 	}
-	
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("time_sleepLog") || key.equals("time_eveningLog")) {
-            // call MoodApplication.registerAlarms();
-           cancelAlarms();
-           registerAlarms();
-        }
-    }
+
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		if (key.equals("time_sleepLog") || key.equals("time_eveningLog")) {
+			// call MoodApplication.registerAlarms();
+			cancelAlarms();
+			registerAlarms();
+		}
+	}
 
 	@Override
 	public void onLowMemory() {
@@ -166,7 +167,7 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 		super.onTerminate();
 		cancelAlarms();
 	}
-	
+
 	public int newNotificationID() {
 		notificationCount++;
 		return notificationCount;
@@ -197,13 +198,13 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 					.getString("connection_server_uri", "")
 					+ "/json/day";
 		}
-		
+
 		public void holdForLater(Day day) {
 			//serialize notSent and save it to a file;
 			MoodApplication app = (MoodApplication)getApplicationContext();
 			File tempFile = new File(FILENAME_TEMP);
 			if(!tempFile.exists()) {
-			    try {
+				try {
 					tempFile.createNewFile();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -228,77 +229,89 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
+
+
 		}
 
 		public void sendDaysInTempFile() {
 			MoodApplication app = (MoodApplication)getApplicationContext();
 			FileInputStream fos;
+
+			try {
+				fos=app.getApplicationContext().openFileInput(FILENAME_TEMP);
+				InputStreamReader inputStreamReader = new InputStreamReader(fos);
+				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+				StringBuilder sb = new StringBuilder();
+				String line = "";
+				boolean deleteFile = false;
+				
 				try {
-					fos=app.getApplicationContext().openFileInput(FILENAME_TEMP);
-					InputStreamReader inputStreamReader = new InputStreamReader(fos);
-				    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-				    StringBuilder sb = new StringBuilder();
-				    String line = "";
-				    boolean deleteFile = false;
-				    try {
-						while ((line = bufferedReader.readLine()) != null) {
-						    sb.append(line);
-						    if(attemptToSendJson(line)) {
-						    	deleteFile = true;
-						    }
-						    else deleteFile = false;
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					while ((line = bufferedReader.readLine()) != null) {
+						sb.append(line);
+						attemptToSendJson(line);
+						deleteFile = true;
 					}
-					Log.v(TAG, "content sent from file: " + sb.toString());
-					File dir = getFilesDir();
-					File file = new File(dir, FILENAME_TEMP);
-					if(deleteFile) {
-						file.delete();
-					}
-				} catch (FileNotFoundException e) {
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			
+				Log.v(TAG, "content sent from file: " + sb.toString());
+				File dir = getFilesDir();
+				File file = new File(dir, FILENAME_TEMP);
+				if(deleteFile) {
+					file.delete();
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 
-		private boolean attemptToSendJson(String line) {
-			boolean success = false;
-			// attempt to send this to the server
-			HttpPost request = new HttpPost(serverUri);
-			try {
-				StringEntity se = new StringEntity(line);
-				se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
-						"application/json"));
-				request.setEntity(se);
-				Log.v(TAG, line);
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				Log.e(TAG, "Encoding error: " + e.getMessage());
-			}
-			try {
-				HttpResponse response = httpclient.execute(request);
-				Log.v(TAG, "HTTP response: "
-						+ response.getStatusLine().getStatusCode());
-				// TODO switch case
-				if (response.getStatusLine().getStatusCode() == 200) {
-					success = true;
-				} else if (response.getStatusLine().getStatusCode() == 403) {
-					//TODO FIX THIS ETERNAL LOOP - data temporarily saved with incorrect credentials will never disappear or be fixed
-					success = false;
-				}
+		private void attemptToSendJson(String line) {
+			class SendDay extends AsyncTask<Void, Void, Void> {
+				private String line;
+				
+				public SendDay(String line) {
+						this.line = line;
+					}
+				@Override
+				protected Void doInBackground(Void... params) {
+					boolean success = false;
+					// attempt to send this to the server
+					HttpPost request = new HttpPost(serverUri);
+					try {
+						StringEntity se = new StringEntity(line);
+						se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
+								"application/json"));
+						request.setEntity(se);
+						Log.v(TAG, line);
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						Log.e(TAG, "Encoding error: " + e.getMessage());
+					}
+					try {
+						HttpResponse response = httpclient.execute(request);
+						Log.v(TAG, "HTTP response: "
+								+ response.getStatusLine().getStatusCode());
+						// TODO switch case
+						if (response.getStatusLine().getStatusCode() == 200) {
+							success = true;
+						} else if (response.getStatusLine().getStatusCode() == 403) {
+							//TODO FIX THIS ETERNAL LOOP - data temporarily saved with incorrect credentials will never disappear or be fixed
+							success = false;
+						}
 
-			} catch (ClientProtocolException e) {
-				Log.e(TAG, "ClientProtocol error: " + e.getMessage());
-			} catch (IOException e) {
-				Log.e(TAG, "IO error: " + e.getMessage());
+					} catch (ClientProtocolException e) {
+						Log.e(TAG, "ClientProtocol error: " + e.getMessage());
+					} catch (IOException e) {
+						Log.e(TAG, "IO error: " + e.getMessage());
+					}
+					return null;
+				}
 			}
-			return success;
+			new SendDay(line).execute();
+
 		}
 
 		public String persist(Day day) {
