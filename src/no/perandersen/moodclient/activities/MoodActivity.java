@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,7 @@ public class MoodActivity extends Activity implements MoodClientActivityInterfac
 	private Day.DayBuilder dayBuilder;
 	private SharedPreferences prefs;
 	private Button dateButton;
+	private static final String TAG = "MoodActivity";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,7 +53,7 @@ public class MoodActivity extends Activity implements MoodClientActivityInterfac
 		dateButton.setText(android.text.format.DateFormat.getDateFormat(getApplicationContext()).format(dayBuilder.getDate()));
 		dayBuilder.moodLow(0);
 		dayBuilder.moodHigh(100);
-		// create RangeSeekBar as Integer range between 20 and 75
+		// create RangeSeekBar as Integer range
 		RangeSeekBar<Integer> seekBar = new RangeSeekBar<Integer>(0, 100,
 				getBaseContext());
 		seekBar.setOnRangeSeekBarChangeListener(new OnRangeSeekBarChangeListener<Integer>() {
@@ -59,7 +61,7 @@ public class MoodActivity extends Activity implements MoodClientActivityInterfac
 			public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
 					Integer minValue, Integer maxValue) {
 				TextView tLow = (TextView) findViewById(R.id.minValText);
-				
+				Log.v(TAG, "value of min: " + minValue + " and value of max: " + maxValue);
 				dayBuilder.moodLow(minValue);
 				dayBuilder.moodHigh(maxValue);
 				
@@ -69,13 +71,13 @@ public class MoodActivity extends Activity implements MoodClientActivityInterfac
 					tLow.setText(R.string.moodScale2);
 				} else if (minValue >= 25 && minValue < 37) {
 					tLow.setText(R.string.moodScale3);
-				} else if (minValue >= 37 && minValue < 50) {
+				} else if (minValue >= 37 && minValue < 62) {
 					tLow.setText(R.string.moodScale4);
-				} else if (minValue >= 50 && minValue < 62) {
-					tLow.setText(R.string.moodScale5);
 				} else if (minValue >= 62 && minValue < 75) {
-					tLow.setText(R.string.moodScale6);
+					tLow.setText(R.string.moodScale5);
 				} else if (minValue >= 75 && minValue < 88) {
+					tLow.setText(R.string.moodScale6);
+				} else if (minValue >= 88) {
 					tLow.setText(R.string.moodScale7);
 				}
 				TextView tHigh = (TextView) findViewById(R.id.maxValText);
@@ -85,13 +87,13 @@ public class MoodActivity extends Activity implements MoodClientActivityInterfac
 					tHigh.setText(R.string.moodScale2);
 				} else if (maxValue >= 25 && maxValue < 37) {
 					tHigh.setText(R.string.moodScale3);
-				} else if (maxValue >= 37 && maxValue < 50) {
+				} else if (maxValue >= 37 && maxValue < 62) {
 					tHigh.setText(R.string.moodScale4);
-				} else if (maxValue >= 50 && maxValue < 62) {
+				} else if (maxValue >= 62 && maxValue < 75) {
 					tHigh.setText(R.string.moodScale5);
-				} else if (maxValue >= 62 && minValue < 75) {
+				} else if (maxValue >= 75 && maxValue < 88) {
 					tHigh.setText(R.string.moodScale6);
-				} else if (maxValue >= 75 && minValue < 88) {
+				} else if (maxValue >= 88) {
 					tHigh.setText(R.string.moodScale7);
 				}
 			}

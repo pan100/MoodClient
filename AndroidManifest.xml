@@ -25,7 +25,7 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name="no.perandersen.moodclient.application.BootReceiver" >
+        <receiver android:name="no.perandersen.moodclient.system.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

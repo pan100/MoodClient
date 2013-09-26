@@ -82,7 +82,7 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 		int sleepHour = Integer.parseInt(pieces[0]);
 		int sleepMinute = Integer.parseInt(pieces[1]);
 
-		String eveningString = sharedPref.getString("time_eveningLog", "20:00");
+		String eveningString = sharedPref.getString("time_eveningLog", "21:00");
 		pieces = null;
 		pieces = eveningString.split(":");
 		int eveningHour = Integer.parseInt(pieces[0]);
