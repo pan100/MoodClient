@@ -16,6 +16,11 @@
             android:key="connection_username"
             android:title="@string/username"
             android:defaultValue=""/>
+        <EditTextPreference 
+            android:key="connection_password"
+            android:title="@string/password"
+            android:inputType="textPassword" 
+            android:defaultValue=""/>        
         <CheckBoxPreference 
             android:key="connection_temporary_data"
             android:title="@string/prefs_temporary"

@@ -125,9 +125,11 @@ public class SleepLogActivity extends Activity implements MoodClientActivityInte
 
 	public void saveAndClose(View view) {
 		//ask the user for his password
-		PasswordDialogBuilder alert = new PasswordDialogBuilder(this);
-
-		alert.show();
+//		PasswordDialogBuilder alert = new PasswordDialogBuilder(this);
+//
+//		alert.show();
+		//in the pilot, we don't want to do this as it hinders usability
+		save(prefs.getString("connection_password", ""));
 	}
 	
 	public void save(String password) {

@@ -343,7 +343,7 @@ public class MoodApplication extends Application implements OnSharedPreferenceCh
 				if (response.getStatusLine().getStatusCode() == 200) {
 					message = "Dataene ble lagret på serveren.";
 				} else if (response.getStatusLine().getStatusCode() == 403) {
-					message = "Feil. Sjekk brukernavn eller passord.";
+					message = "Feil. Sjekk brukernavn eller passord i instillinger.";
 				}
 
 			} catch (ClientProtocolException e) {

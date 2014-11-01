@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +40,7 @@ public class TriggersDiaryActivity extends Activity implements MoodClientActivit
 		setContentView(R.layout.activity_triggers_diary);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		if(getIntent().hasExtra("DAY_BUILDER")) {
 			dayBuilder = (DayBuilder) getIntent().getSerializableExtra("DAY_BUILDER");
 		}
@@ -99,9 +101,11 @@ public class TriggersDiaryActivity extends Activity implements MoodClientActivit
 		ArrayList<String> triggers = new ArrayList<String>(Arrays.asList(triggerTextView.getText().toString().split("\\s+")));
 		dayBuilder.setTriggers(triggers);
 		//ask the user for his password
-		PasswordDialogBuilder alert = new PasswordDialogBuilder(this);
-
-		alert.show();
+//		PasswordDialogBuilder alert = new PasswordDialogBuilder(this);
+//
+//		alert.show();
+		//in the pilot, we don't want to do this as it hinders usability
+		save(prefs.getString("connection_password", ""));
 	}
 	
 	public void previousButtonClick(View w) {
